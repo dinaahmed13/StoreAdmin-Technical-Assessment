@@ -25,16 +25,17 @@ public class StoreAdminTest {
         wait=new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    @Test
-    public void addNewProduct(){
+
+    @Test(dataProvider = "productData",dataProviderClass = TestData.class)
+    public void addNewProduct(String productName, String price){
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[normalize-space()='Enter as admin']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("v-pills-inventory-tab"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_items_page"))).click();
         driver.findElement(By.cssSelector("[title='Add items']")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[normalize-space()='Standard item']"))).click();
-        driver.findElement(By.id("items_name")).sendKeys("Laptop");
-        driver.findElement(By.id("items_selling_price")).sendKeys("99890");
+        driver.findElement(By.id("items_name")).sendKeys(productName);
+        driver.findElement(By.id("items_selling_price")).sendKeys(price);
         driver.findElement(By.id("item_button_title")).click();
 
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[text()='success']"))).isDisplayed());
@@ -43,6 +44,6 @@ public class StoreAdminTest {
 
     @AfterMethod
     public void tearDown() {
-       driver.close();
+       driver.quit();
     }
 }
