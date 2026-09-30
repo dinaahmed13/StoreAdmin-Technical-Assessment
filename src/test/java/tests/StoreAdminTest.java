@@ -2,6 +2,8 @@ package tests;
 
 import base.BaseTest;
 import data.TestData;
+import org.example.pages.InventoryPage;
+import org.example.pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -16,21 +18,21 @@ public class StoreAdminTest extends BaseTest {
     @Test(dataProvider = "productData",dataProviderClass = TestData.class)
     public void addNewProduct(String productName, String price){
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[normalize-space()='Enter as admin']"))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("v-pills-inventory-tab"))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_items_page"))).click();
-        driver.findElement(By.cssSelector("[title='Add items']")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[normalize-space()='Standard item']"))).click();
-        driver.findElement(By.id("items_name")).sendKeys(productName);
-        driver.findElement(By.id("items_selling_price")).sendKeys(price);
-        driver.findElement(By.id("item_button_title")).click();
+        LoginPage loginPage=new LoginPage(driver);
+        InventoryPage inventoryPage=new InventoryPage(driver);
 
-        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[text()='success']"))).isDisplayed());
+        loginPage.clickEnterAsAdminButton();
+        inventoryPage.clickInventoryTab();
+        inventoryPage.clickItems();
+        inventoryPage.clickAddItems();
+        inventoryPage.clickStandardItem();
+        inventoryPage.enterProductName(productName);
+        inventoryPage.enterSellingPrice(price);
+        inventoryPage.clickSaveItem();
+
+        Assert.assertTrue(inventoryPage.getSuccessMessage().isDisplayed());
 
     }
 
-    @AfterMethod
-    public void tearDown() {
-       driver.quit();
-    }
+
 }

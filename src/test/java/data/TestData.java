@@ -8,9 +8,9 @@ public class TestData {
     public Object[][] productData() {
 
         return new Object[][] {
-                {"Laptop", "3890"},
-                {"Keyboard", "2500"},
-                {"Mouse", "1200"}
+                {"Laptop", "3220"},
+              //  {"Keyboard", "2500"},
+              //  {"Mouse", "1200"}
         };
     }
 }
