@@ -1,3 +1,6 @@
+package tests;
+
+import data.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,18 +15,8 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class StoreAdminTest {
-    WebDriver driver;
-    WebDriverWait wait;
 
-    @BeforeMethod
-    public void setUp(){
-        ChromeOptions chromeOptions =new ChromeOptions();
-        chromeOptions.addArguments("--incognito");
-        driver=new ChromeDriver(chromeOptions);
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demo.posnic.io/");
-        wait=new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
+
 
 
     @Test(dataProvider = "productData",dataProviderClass = TestData.class)
